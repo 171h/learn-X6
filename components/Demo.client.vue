@@ -3,6 +3,8 @@ import { Graph } from '@antv/x6'
 import { Snapline } from '@antv/x6-plugin-snapline'
 import { data } from '@/data/demo'
 
+Graph.registerNode(customNode.name, customNode.entity, customNode.inherit)
+
 const container = ref<HTMLElement>()
 const nuxtApp = useNuxtApp()
 const graph = ref<Graph>() as Ref<Graph>
@@ -30,6 +32,9 @@ nuxtApp.hook('app:mounted', () => {
     },
     panning: true,
     mousewheel: true,
+    translating: {
+      restrict: true,
+    },
   })
   graph.value.fromJSON(data)
   graph.value.centerContent()
@@ -62,6 +67,25 @@ function transform(command: string) {
       break
   }
 }
+
+function addNode() {
+  graph.value.addNode({
+    id: 'node3',
+    shape: 'custom-node',
+    x: 40,
+    y: 40,
+    label: 'custom',
+  })
+}
+
+function addEdge() {
+  graph.value.addEdge({
+    shape: 'edge',
+    source: 'node1',
+    target: 'node3',
+    label: 'custom',
+  })
+}
 </script>
 
 <template>
@@ -73,6 +97,8 @@ function transform(command: string) {
     <UButton label="zoomTo" @click="() => transform('zoomTo')" />
     <UButton label="zoomToFit" @click="() => transform('zoomToFit')" />
     <UButton label="centerContent" @click="() => transform('centerContent')" />
+    <UButton label="addNode" @click="addNode" />
+    <UButton label="addEdge" @click="addEdge" />
   </div>
   <div class="h-50% w-full">
     <div ref="container" />
