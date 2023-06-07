@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Timeline } from '@knight-lab/timelinejs'
+import { Data } from '~/types/index'
 import '@knight-lab/timelinejs/dist/css/timeline.css'
 import { data } from '~/data/timeline'
 

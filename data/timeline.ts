@@ -1,4 +1,4 @@
-import type { TimelineJSJSON } from '../types'
+// import type { Props } from '../types/timelinejs3'
 
 export const data = {
   title: {

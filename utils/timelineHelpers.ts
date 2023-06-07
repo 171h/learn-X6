@@ -2,7 +2,7 @@ import type {
   SearchResultMatch,
   SearchResultMatchEntry,
   TimelineJSSlide,
-} from '@/types'
+} from '~/types/timelinejs3'
 
 export interface DateObject {
   display_date?: string
