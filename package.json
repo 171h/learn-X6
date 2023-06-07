@@ -13,6 +13,7 @@
     "start:generate": "npx serve .output/public"
   },
   "devDependencies": {
+    "@171h/log": "^2.2.0",
     "@antfu/eslint-config": "^0.39.5",
     "@element-plus/nuxt": "^1.0.5",
     "@iconify-json/carbon": "^1.1.17",
@@ -21,6 +22,7 @@
     "@nuxthq/ui": "^2.3.0",
     "@nuxtjs/color-mode": "^3.2.0",
     "@pinia/nuxt": "^0.4.11",
+    "@types/uuid": "^9.0.1",
     "@unocss/eslint-config": "^0.51.13",
     "@unocss/nuxt": "^0.51.13",
     "@vite-pwa/nuxt": "^0.0.9",
@@ -42,6 +44,7 @@
     "@antv/x6-plugin-scroller": "^2.0.9",
     "@antv/x6-plugin-selection": "^2.1.7",
     "@antv/x6-plugin-snapline": "^2.1.7",
-    "@antv/x6-vue-shape": "^2.0.11"
+    "@antv/x6-vue-shape": "^2.0.11",
+    "uuid": "^9.0.0"
   }
 }
