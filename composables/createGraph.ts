@@ -1,6 +1,7 @@
 import type { Model } from '@antv/x6'
 import { Graph } from '@antv/x6'
 import { Snapline } from '@antv/x6-plugin-snapline'
+import { Scroller } from '@antv/x6-plugin-scroller'
 
 export function useCreateGraph(graph: Graph, container: HTMLDivElement, data: Model.FromJSONData) {
   graph = new Graph({
@@ -35,6 +36,9 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, data: Mo
   graph.use(
     new Snapline({ enabled: true }),
   )
+  // graph.use(
+  //   new Scroller(),
+  // )
   // 连接调试工具
   if (!window.__x6_instances__)
     window.__x6_instances__ = []
