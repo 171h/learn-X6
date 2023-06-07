@@ -3,7 +3,7 @@ export const data = {
     {
       id: 'node1',
       shape: 'rect',
-      x: 40,
+      x: 0,
       y: 40,
       width: 100,
       height: 40,

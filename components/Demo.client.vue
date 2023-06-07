@@ -1,103 +1,34 @@
 <script setup lang="ts">
 import { Graph } from '@antv/x6'
-import { Snapline } from '@antv/x6-plugin-snapline'
-import { data } from '@/data/demo'
+import { data } from '~/data/demo'
+import { customNode, workNode } from '~/utils/x6-node'
+import { addNode } from '~/utils/addNode'
+import { addEdge } from '~/utils/addEdge'
+import { transform } from '~/utils/transform'
 
+Graph.registerNode(workNode.name, workNode.entity, workNode.inherit)
 Graph.registerNode(customNode.name, customNode.entity, customNode.inherit)
 
-const container = ref<HTMLElement>()
-const nuxtApp = useNuxtApp()
+const container = ref<HTMLDivElement>() as Ref<HTMLDivElement>
 const graph = ref<Graph>() as Ref<Graph>
-nuxtApp.hook('app:mounted', () => {
-  graph.value = new Graph({
-    container: container.value,
-    autoResize: true,
-    background: {
-      color: '#F2F7FA',
-    },
-    grid: {
-      visible: true,
-      type: 'doubleMesh',
-      args: [
-        {
-          color: '#eee',
-          thickness: 1,
-        },
-        {
-          color: '#ddd',
-          thickness: 1,
-          factor: 4,
-        },
-      ],
-    },
-    panning: true,
-    mousewheel: true,
-    translating: {
-      restrict: true,
-    },
-  })
-  graph.value.fromJSON(data)
-  graph.value.centerContent()
-  graph.value.use(
-    new Snapline({ enabled: true }),
-  )
+useNuxtApp().hook('app:mounted', () => {
+  graph.value = useCreateGraph(graph.value, container.value, data)
 })
-
-function transform(command: string) {
-  switch (command) {
-    case 'translate':
-      graph.value.translate(20, 20)
-      break
-    case 'zoomIn':
-      graph.value.zoom(0.2)
-      break
-    case 'zoomOut':
-      graph.value.zoom(-0.2)
-      break
-    case 'zoomTo':
-      graph.value.zoomTo(1)
-      break
-    case 'zoomToFit':
-      graph.value.zoomToFit()
-      break
-    case 'centerContent':
-      graph.value.centerContent()
-      break
-    default:
-      break
-  }
-}
-
-function addNode() {
-  graph.value.addNode({
-    id: 'node3',
-    shape: 'custom-node',
-    x: 40,
-    y: 40,
-    label: 'custom',
-  })
-}
-
-function addEdge() {
-  graph.value.addEdge({
-    shape: 'edge',
-    source: 'node1',
-    target: 'node3',
-    label: 'custom',
-  })
-}
+onNuxtReady(() => {
+  graph.value = useCreateGraph(graph.value, container.value, data)
+})
 </script>
 
 <template>
   <div class="flex gap-2">
     Hello X6
-    <UButton label="translate" @click="() => transform('translate')" />
-    <UButton label="zoomIn" @click="() => transform('zoomIn')" />
-    <UButton label="zoomOut" @click="() => transform('zoomOut')" />
-    <UButton label="zoomTo" @click="() => transform('zoomTo')" />
-    <UButton label="zoomToFit" @click="() => transform('zoomToFit')" />
-    <UButton label="centerContent" @click="() => transform('centerContent')" />
-    <UButton label="addNode" @click="addNode" />
+    <UButton label="translate" @click="() => transform('translate', graph)" />
+    <UButton label="zoomIn" @click="() => transform('zoomIn', graph)" />
+    <UButton label="zoomOut" @click="() => transform('zoomOut', graph)" />
+    <UButton label="zoomTo" @click="() => transform('zoomTo', graph)" />
+    <UButton label="zoomToFit" @click="() => transform('zoomToFit', graph)" />
+    <UButton label="centerContent" @click="() => transform('centerContent', graph)" />
+    <UButton label="addNode" @click="addNode(graph)" />
     <UButton label="addEdge" @click="addEdge" />
   </div>
   <div class="h-50% w-full">

@@ -1,3 +1,5 @@
+import type { Node } from '@antv/x6'
+
 export const customNode = {
   name: 'custom-node',
   entity: {
@@ -38,3 +40,33 @@ export const customNode = {
   },
   inherit: true,
 }
+
+export const workNode = {
+  name: 'work-node',
+  entity: {
+    inherit: 'rect',
+    width: 100,
+    height: 40,
+    markup: [
+      {
+        tagName: 'rect',
+        selector: 'body',
+      },
+      {
+        tagName: 'text',
+        selector: 'label',
+      },
+    ],
+    attrs: {
+      body: {
+        stroke: 'transparent',
+        fill: '#155abf',
+      },
+    },
+  },
+  inherit: true,
+}
+
+type CustomNode = Node.Definition | (Node.Config & {
+  inherit?: string | Node.Definition | undefined
+})
