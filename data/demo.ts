@@ -16,6 +16,21 @@ export const data = {
       },
     },
     {
+      id: 'node02',
+      shape: 'rect',
+      x: 0,
+      y: -40,
+      width: 100,
+      height: 40,
+      label: '左下角为原点',
+      attrs: {
+        body: {
+          stroke: '#000',
+          strokeWidth: 1,
+        },
+      },
+    },
+    {
       id: 'node1',
       shape: 'rect',
       x: 40,

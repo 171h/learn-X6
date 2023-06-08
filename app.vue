@@ -11,9 +11,9 @@ useHead({
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout> -->
-  <TimeLineTest />
+  <!-- <TimeLineTest /> -->
   <!-- <SearchResultsTimeline /> -->
-  <!-- <Demo /> -->
+  <Demo />
 </template>
 
 <style>

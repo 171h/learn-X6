@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: [
     // '@vueuse/nuxt',
     '@unocss/nuxt',
-    // '@pinia/nuxt',
+    '@pinia/nuxt',
     // '@nuxtjs/color-mode',
     // '@vite-pwa/nuxt',
     '@nuxthq/ui',
@@ -60,6 +60,6 @@ export default defineNuxtConfig({
   // pwa,
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 })

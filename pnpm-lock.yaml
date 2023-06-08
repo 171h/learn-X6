@@ -82,6 +82,9 @@ devDependencies:
   '@vite-pwa/nuxt':
     specifier: ^0.0.9
     version: 0.0.9(@nuxt/kit@3.5.3)(vite-plugin-pwa@0.14.7)
+  '@vueuse/core':
+    specifier: ^10.1.2
+    version: 10.1.2(vue@3.3.4)
   '@vueuse/nuxt':
     specifier: ^10.1.2
     version: 10.1.2(nuxt@3.5.3)(rollup@2.79.1)(vue@3.3.4)
