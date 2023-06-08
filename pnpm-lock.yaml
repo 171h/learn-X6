@@ -6,32 +6,35 @@ settings:
 
 dependencies:
   '@antv/x6':
-    specifier: npm:@171h/x6@^2.12.0
-    version: /@171h/x6@2.12.0
+    specifier: ^2.11.1
+    version: 2.11.1
   '@antv/x6-plugin-clipboard':
     specifier: ^2.1.6
-    version: 2.1.6(@171h/x6@2.12.0)
+    version: 2.1.6(@antv/x6@2.11.1)
   '@antv/x6-plugin-history':
     specifier: ^2.2.3
-    version: 2.2.3(@171h/x6@2.12.0)
+    version: 2.2.3(@antv/x6@2.11.1)
   '@antv/x6-plugin-keyboard':
     specifier: ^2.2.1
-    version: 2.2.1(@171h/x6@2.12.0)
+    version: 2.2.1(@antv/x6@2.11.1)
   '@antv/x6-plugin-minimap':
     specifier: ^2.0.5
-    version: 2.0.5(@171h/x6@2.12.0)
+    version: 2.0.5(@antv/x6@2.11.1)
   '@antv/x6-plugin-scroller':
-    specifier: npm:@171h/x6-plugin-scroller@^2.1.0
-    version: /@171h/x6-plugin-scroller@2.1.0(@171h/x6@2.12.0)
+    specifier: ^2.0.9
+    version: 2.0.9(@antv/x6@2.11.1)
   '@antv/x6-plugin-selection':
     specifier: ^2.1.7
-    version: 2.1.7(@171h/x6@2.12.0)
+    version: 2.1.7(@antv/x6@2.11.1)
   '@antv/x6-plugin-snapline':
     specifier: ^2.1.7
-    version: 2.1.7(@171h/x6@2.12.0)
+    version: 2.1.7(@antv/x6@2.11.1)
+  '@antv/x6-plugin-transform':
+    specifier: ^2.1.7
+    version: 2.1.7(@antv/x6@2.11.1)
   '@antv/x6-vue-shape':
     specifier: ^2.0.11
-    version: 2.0.11(@171h/x6@2.12.0)(vue@3.3.4)
+    version: 2.0.11(@antv/x6@2.11.1)(vue@3.3.4)
   '@knight-lab/timelinejs':
     specifier: ^3.9.2
     version: 3.9.2
@@ -123,22 +126,6 @@ packages:
     dependencies:
       chalk: 4.1.2
     dev: true
-
-  /@171h/x6-plugin-scroller@2.1.0(@171h/x6@2.12.0):
-    resolution: {integrity: sha512-LEH3DHVUfhkhNr6w4h36xzl3wc+OAzTbAreFS0CXTvnS3e2qR3a9TduRLW9192pCzBoL7eopHEqyleRSXwtEGQ==}
-    peerDependencies:
-      '@antv/x6': ^2.x
-    dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
-    dev: false
-
-  /@171h/x6@2.12.0:
-    resolution: {integrity: sha512-/PpKHCMJy6ixPiFlsaMM7lJu0T3wRXZ+XSvAynU74EwfU7hwF2ofm9angf3cECJYfSg/qBu9GRrUPxqG6FquTg==}
-    dependencies:
-      '@antv/x6-common': 2.0.12
-      '@antv/x6-geometry': 2.0.5
-      utility-types: 3.10.0
-    dev: false
 
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -275,56 +262,72 @@ packages:
     resolution: {integrity: sha512-MId6riEQkxphBpVeTcL4ZNXL4lScyvDEPLyIafvWMcWNTGK0jgkK7N20XSzqt8ltJb0mGUso5s56mrk8ysHu2A==}
     dev: false
 
-  /@antv/x6-plugin-clipboard@2.1.6(@171h/x6@2.12.0):
+  /@antv/x6-plugin-clipboard@2.1.6(@antv/x6@2.11.1):
     resolution: {integrity: sha512-roZPLnZx6PK8MBvee0QMo90fz/TXeF0WNe4EGin2NBq5M1I5XTWrYvA6N2XVIiWAAI67gjQeEE8TpkL7f8QdqA==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
     dev: false
 
-  /@antv/x6-plugin-history@2.2.3(@171h/x6@2.12.0):
+  /@antv/x6-plugin-history@2.2.3(@antv/x6@2.11.1):
     resolution: {integrity: sha512-yiv5e7CQKm1HrJe7je4iWjkzDzU+I0WsyL8En2j0UwXJrUNaKYyv4BkRg2tvyi52hydxidMgi3tNnNQHEZwoMg==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
     dev: false
 
-  /@antv/x6-plugin-keyboard@2.2.1(@171h/x6@2.12.0):
+  /@antv/x6-plugin-keyboard@2.2.1(@antv/x6@2.11.1):
     resolution: {integrity: sha512-sqfN0h4txVO211uIeKBd3zQ/IN2zPzDThWNTEhRx7Lecg1fO7uRXWBbOA48j3EgpRFXVexdSzIEVJEx+IWUdYw==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
       mousetrap: 1.6.5
     dev: false
 
-  /@antv/x6-plugin-minimap@2.0.5(@171h/x6@2.12.0):
+  /@antv/x6-plugin-minimap@2.0.5(@antv/x6@2.11.1):
     resolution: {integrity: sha512-6L+W80AvoEZG4cwRxgPxvYLeKhqkBJEt4hTnZ2NWWcvBx02F9RJKRZVEEUemqE12mKUv4HT6WtbQV0QIfkTEMw==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
     dev: false
 
-  /@antv/x6-plugin-selection@2.1.7(@171h/x6@2.12.0):
+  /@antv/x6-plugin-scroller@2.0.9(@antv/x6@2.11.1):
+    resolution: {integrity: sha512-f3fluvSIbZBp+c5iKyidAoz19i0beWOnPA0CPfu/K4C+Jf1eWNgaFXbN3hcHPQRvFRJiPtvPApK30aCaik9Omg==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.11.1
+    dev: false
+
+  /@antv/x6-plugin-selection@2.1.7(@antv/x6@2.11.1):
     resolution: {integrity: sha512-ODfYLNwKSaLgIYMYfMW4dYQ9KKFOVBEdH0BzvyG8mfRol+JtZuyrm4BRbAvMryQKHrSxs4JCYXTFd2F7ZTuxLQ==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
     dev: false
 
-  /@antv/x6-plugin-snapline@2.1.7(@171h/x6@2.12.0):
+  /@antv/x6-plugin-snapline@2.1.7(@antv/x6@2.11.1):
     resolution: {integrity: sha512-AsysoCb9vES0U2USNhEpYuO/W8I0aYfkhlbee5Kt4NYiMfQfZKQyqW/YjDVaS2pm38C1NKu1LdPVk/BBr4CasA==}
     peerDependencies:
       '@antv/x6': ^2.x
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
     dev: false
 
-  /@antv/x6-vue-shape@2.0.11(@171h/x6@2.12.0)(vue@3.3.4):
+  /@antv/x6-plugin-transform@2.1.7(@antv/x6@2.11.1):
+    resolution: {integrity: sha512-idzBr8/Bcw8zHQUSNS0Y8VSNMigCWiUuiwqO572Ac/P2tMfP6Ot2SahEYHGUOD2NEMPr95q4JMZc+Evvt4JFTw==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+    dependencies:
+      '@antv/x6': 2.11.1
+    dev: false
+
+  /@antv/x6-vue-shape@2.0.11(@antv/x6@2.11.1)(vue@3.3.4):
     resolution: {integrity: sha512-LYNkvL9AjbeAi6ZzA2/aNRKv0E0+bgR5nMQlcqC+75bYoZtCpd7ZkECcOQhDU4s/DE2+EyyPX8aI1e2pA39Y/A==}
     peerDependencies:
       '@antv/x6': ^2.x
@@ -334,9 +337,17 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      '@antv/x6': /@171h/x6@2.12.0
+      '@antv/x6': 2.11.1
       vue: 3.3.4
       vue-demi: 0.14.5(vue@3.3.4)
+    dev: false
+
+  /@antv/x6@2.11.1:
+    resolution: {integrity: sha512-DwyuT/zuTEhwsnKwCj67cadwLeEbB5jfdCxrkTnEm6pg0+vT3FinbF71IK7SHoY8d4HOHl+sJt7ikJfr61JqLw==}
+    dependencies:
+      '@antv/x6-common': 2.0.12
+      '@antv/x6-geometry': 2.0.5
+      utility-types: 3.10.0
     dev: false
 
   /@apideck/better-ajv-errors@0.3.6(ajv@8.12.0):

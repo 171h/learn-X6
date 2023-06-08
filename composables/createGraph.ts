@@ -2,11 +2,18 @@ import type { Model } from '@antv/x6'
 import { Graph } from '@antv/x6'
 import { Snapline } from '@antv/x6-plugin-snapline'
 import { Scroller } from '@antv/x6-plugin-scroller'
+import { MiniMap } from '@antv/x6-plugin-minimap'
+import { History } from '@antv/x6-plugin-history'
+import { Transform } from '@antv/x6-plugin-transform'
+import { Clipboard } from '@antv/x6-plugin-clipboard'
+import { Keyboard } from '@antv/x6-plugin-keyboard'
 
-export function useCreateGraph(graph: Graph, container: HTMLDivElement, data: Model.FromJSONData) {
+export function useCreateGraph(graph: Graph, container: HTMLDivElement, minimap: HTMLDivElement, data: Model.FromJSONData) {
   graph = new Graph({
     container,
     autoResize: true,
+    width: 800,
+    height: 600,
     background: {
       color: '#F2F7FA',
     },
@@ -25,8 +32,8 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, data: Mo
         },
       ],
     },
-    panning: true,
-    mousewheel: true,
+    // panning: true,
+    // mousewheel: true,
     translating: {
       restrict: true,
     },
@@ -36,9 +43,41 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, data: Mo
   graph.use(
     new Snapline({ enabled: true }),
   )
-  // graph.use(
-  //   new Scroller(),
-  // )
+  graph.use(
+    new Scroller({
+      enabled: true,
+    }),
+  )
+  graph.use(
+    new MiniMap({
+      container: minimap,
+      minScale: 1,
+      maxScale: 1,
+    }),
+  )
+  graph.use(
+    new History({
+      enabled: true,
+    }),
+  )
+  graph.use(
+    new Transform({
+      resizing: {
+        enabled: true,
+      },
+    }),
+  )
+  graph.use(
+    new Clipboard({
+      enabled: true,
+    }),
+  )
+  graph.use(
+    new Keyboard({
+      enabled: true,
+    }),
+  )
+
   // 连接调试工具
   if (!window.__x6_instances__)
     window.__x6_instances__ = []
