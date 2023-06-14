@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 import { Graph } from '@antv/x6'
 import { getTeleport, register } from '@antv/x6-vue-shape'
-import ProgressNode from './ProgressNode.client.vue'
+import ProgressNode from './ProgressNode2.client.vue'
 
 register({
   shape: 'custom-vue-node',
@@ -39,5 +39,6 @@ export default defineComponent({
   <div class="app-content">
     <div id="container" />
     <TeleportContainer />
+    <ProgressNode />
   </div>
 </template>

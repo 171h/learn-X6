@@ -5,12 +5,15 @@ import { Logger } from '@171h/log'
 import { History } from '@antv/x6-plugin-history'
 import { useScaleStore } from '../store/scale'
 import { data } from '~/data/demo'
-import { tlBot, tlTop, workNode } from '~/utils/x6-node'
+import { task, tlBot, tlTop, verLine, workNode } from '~/utils/x6-node'
+import { extendTimeline, pruducer } from '~/utils/timeline'
 
 const store = useScaleStore()
 
 const logger = new Logger('Demo.client.vue')
 
+Graph.registerNode(task.name, task.entity, task.inherit)
+Graph.registerNode(verLine.name, verLine.entity, verLine.inherit)
 Graph.registerNode(workNode.name, workNode.entity, workNode.inherit)
 Graph.registerNode(tlBot.name, tlBot.entity, tlBot.inherit)
 Graph.registerNode(tlTop.name, tlTop.entity, tlTop.inherit)
@@ -19,6 +22,9 @@ const container = ref<HTMLDivElement>() as Ref<HTMLDivElement>
 const minimap = ref<HTMLDivElement>() as Ref<HTMLDivElement>
 const graph = ref<Graph>() as Ref<Graph>
 const node = ref<Node<Node.Properties>>() as Ref<Node<Node.Properties>>
+const timeline = ref<Node<Node.Properties>>()
+const left = ref<Node<Node.Properties>>()
+const right = ref<Node<Node.Properties>>()
 const scale = ref<number>(1)
 const state = ref({
   canRedo: false,
@@ -40,6 +46,25 @@ onNuxtReady(() => {
   graph.value.on('histore:change', () => {
     state.value.canRedo = graph.value.canRedo()
     state.value.canUndo = graph.value.canUndo()
+  })
+
+  graph.value.on('translate', ({ tx, ty }) => {
+    logger.info('translate', tx, ty)
+  })
+
+  graph.value.on('graph:scroll', (evt: any) => {
+    logger.info('graph:scroll', evt.e.scrollLeft, evt.e.scrollTop)
+    const bbox = timeline.value?.getBBox()
+    logger.info('graph:scroll', 'time-line,bbox', bbox)
+  })
+
+  left.value = graph.value.addNode({
+    id: 'left',
+    shape: 'rect',
+    x: 0,
+    y: 0,
+    visible: false,
+    label: '最左侧',
   })
 })
 
@@ -69,6 +94,39 @@ function onUndo() {
 function onRedo() {
   graph.value?.redo()
 }
+
+const count = ref(0)
+function addTask() {
+  graph.value.addNode({
+    shape: 'task',
+    label: `task${count.value}`,
+    y: count.value * 30,
+    // width height 高度必须同时传递
+    width: count.value * 30,
+    height: 25,
+    h: 23,
+  })
+  count.value++
+}
+function addVerline() {
+  graph.value.addNode({
+    shape: 'ver-line',
+    y: count.value * 30,
+    // width height 高度必须同时传递
+    width: count.value * 30,
+    height: 25,
+  })
+  count.value++
+}
+
+function addPath() {
+  const node = pruducer(graph.value)
+  timeline.value = graph.value.addNode(node)
+}
+function test() {
+  const pos = graph.value.getScrollbarPosition()
+  logger.info('test, pos', pos)
+}
 </script>
 
 <template>
@@ -82,6 +140,11 @@ function onRedo() {
     <UButton label="zoomToFit" @click="() => transform('zoomToFit', graph)" />
     <UButton label="centerContent" @click="() => transform('centerContent', graph)" />
     <UButton label="addNode" @click="addNode(graph)" />
+    <UButton label="addPath" @click="addPath()" />
+    <UButton label="extendTimeline" @click="extendTimeline(timeline!, left)" />
+    <UButton label="test" @click="test()" />
+    <UButton label="addTask" @click="addTask()" />
+    <UButton label="addVerline" @click="addVerline()" />
     <UButton label="addEdge" @click="addEdge" />
     <UButton label="resize" @click="resize(node, randomInt())" />
     <UButton label="resizeLeft" @click="resize(node, randomInt(), { direction: 'left' })" />

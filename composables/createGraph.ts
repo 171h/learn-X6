@@ -1,6 +1,8 @@
 import type { Model } from '@antv/x6'
 import { Graph } from '@antv/x6'
 import { Snapline } from '@antv/x6-plugin-snapline'
+
+// import { Scroller } from '@antv/x6-plugin-scroller'
 import { Scroller } from '@antv/x6-plugin-scroller'
 import { MiniMap } from '@antv/x6-plugin-minimap'
 import { History } from '@antv/x6-plugin-history'
@@ -34,9 +36,9 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, minimap:
     },
     // panning: true,
     // mousewheel: true,
-    translating: {
-      restrict: true,
-    },
+    // translating: {
+    //   restrict: true,
+    // },
   })
   graph.fromJSON(data)
   graph.centerContent()
@@ -46,6 +48,7 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, minimap:
   graph.use(
     new Scroller({
       enabled: true,
+      pageVisible: true,
     }),
   )
   graph.use(

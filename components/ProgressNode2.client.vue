@@ -1,13 +1,19 @@
 <!-- eslint-disable no-console -->
 <script lang="ts">
-import { Node } from '@antv/x6'
+import { defineComponent } from 'vue'
 
-const getNode = inject('getNode', () => Node)
-const percentage = ref(80)
-
-onNuxtReady(() => {
-  const node = getNode()
-  console.log(node)
+export default defineComponent({
+  name: 'ProgressNode',
+  inject: ['getNode'],
+  data() {
+    return {
+      percentage: 80,
+    }
+  },
+  mounted() {
+    const node = (this as any).getNode()
+    console.log(node)
+  },
 })
 </script>
 

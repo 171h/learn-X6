@@ -1,4 +1,70 @@
-import type { Node } from '@antv/x6'
+import type { Markup, Node } from '@antv/x6'
+
+export const task = {
+  name: 'task',
+  entity: {
+    inherit: 'rect',
+    height: 25,
+    markup: [
+      {
+        tagName: 'rect',
+        selector: 'mid',
+      },
+      {
+        tagName: 'text',
+        selector: 'label',
+      },
+    ],
+    // attrs: 必须写在 markup 外部通过选择器设置样式
+    attrs: {
+      mid: {
+        fill: '#8abbed',
+        stroke: 'transparent',
+        strokeWidth: 0,
+        refWidth: '100%',
+        refHeight: '50%',
+        rx: 0,
+        ry: 0,
+      },
+    },
+  },
+  inherit: true,
+}
+
+export const verLine = {
+  name: 'ver-line',
+  entity: {
+    inherit: 'path',
+    markup: [
+      {
+        tagName: 'rect',
+        selector: 'mid',
+      },
+      {
+        tagName: 'path',
+        selector: 'body',
+      },
+    ],
+    attrs: {
+      mid: {
+        fill: '#8abbed',
+        stroke: 'transparent',
+        strokeWidth: 0,
+        refWidth: '100%',
+        refHeight: '50%',
+        rx: 0,
+        ry: 0,
+      },
+      body: {
+        stroke: '#ccc',
+        strokeWidth: 5,
+        d: 'M 0 0 L 0 100%',
+        refX: '50%',
+      },
+    },
+  },
+  inherit: true,
+}
 
 export const workNode = {
   name: 'work-node',
