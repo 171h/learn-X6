@@ -63,8 +63,16 @@ onNuxtReady(() => {
     shape: 'rect',
     x: 0,
     y: 0,
-    visible: false,
+    visible: true,
     label: '最左侧',
+  })
+  right.value = graph.value.addNode({
+    id: 'right',
+    shape: 'rect',
+    x: 0,
+    y: 0,
+    visible: true,
+    label: '最右侧',
   })
 })
 
@@ -141,21 +149,22 @@ function test() {
     <UButton label="centerContent" @click="() => transform('centerContent', graph)" />
     <UButton label="addNode" @click="addNode(graph)" />
     <UButton label="addPath" @click="addPath()" />
-    <UButton label="extendTimeline" @click="extendTimeline(timeline!, left)" />
+    <UButton label="extendTimelineL" @click="extendTimeline(timeline!, { left, right, direction: 'left' })" />
+    <UButton label="extendTimelineR" @click="extendTimeline(timeline!, { left, right })" />
     <UButton label="test" @click="test()" />
-    <UButton label="addTask" @click="addTask()" />
+    <!-- <UButton label="addTask" @click="addTask()" />
     <UButton label="addVerline" @click="addVerline()" />
     <UButton label="addEdge" @click="addEdge" />
     <UButton label="resize" @click="resize(node, randomInt())" />
     <UButton label="resizeLeft" @click="resize(node, randomInt(), { direction: 'left' })" />
-    <UButton label="scale" @click="scale(node, randomFloat(2), { x: 0, y: 0 })" />
+    <UButton label="scale" @click="scale(node, randomFloat(2), { x: 0, y: 0 })" /> -->
     <!-- <UButton label="zoomTo" @click="zoomTo(graph, randomFloat(3))" /> -->
     <!-- <UButton label="zoomXTo" @click="zoomXTo(graph, randomFloat(3))" /> -->
     <UButton label="zoomX+" @click="zoomX(0.2)" />
     <UButton label="zoomX-" @click="zoomX(-0.2)" />
     <UButton label="zoomXTo" @click="zoomXTo(randomInt(10))" />
-    <UButton :disabled="state.canUndo" label="undo" @click="onUndo" />
-    <UButton :disabled="state.canRedo" label="redo" @click="onRedo" />
+    <!-- <UButton :disabled="state.canUndo" label="undo" @click="onUndo" />
+    <UButton :disabled="state.canRedo" label="redo" @click="onRedo" /> -->
   </div>
   <div class="h-90% w-full">
     <div ref="container" />

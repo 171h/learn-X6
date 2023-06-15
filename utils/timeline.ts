@@ -4,17 +4,17 @@ import { Logger } from '@171h/log'
 const logger = new Logger('utils/timeline.ts')
 
 export function pruducer(graph: Graph) {
-  const width = window.innerWidth * 2
+  const width = 1920
   logger.info('pruducer', width)
   const options = {
     startTime: 0,
-    interval: 25,
+    interval: 15,
     height: 30,
     y: -30,
     x: 0,
   }
-  const opt = Object.assign({ interval: 15 }, options)
-  const count = Math.ceil(3840 / opt.interval)
+  const opt = Object.assign({ interval: 25 }, options)
+  const count = Math.ceil(width / opt.interval)
   const node = {
     id: 'time-line',
     shape: 'path',
@@ -36,7 +36,7 @@ export function pruducer(graph: Graph) {
         stroke: '#000',
         strokeWidth: 1,
         fill: '#000',
-        d: `M 0 0 L ${width} 0`,
+        d: `M 0 0 L ${(count - 1) * opt.interval} 0`,
       },
       bottom: {
         stroke: '#000',
@@ -52,29 +52,40 @@ export function pruducer(graph: Graph) {
   return node
 }
 
-export function extendTimeline(timeline: Node<Node.Properties>, left?: Node<Node.Properties>) {
-  const count = 100
-  const interval = 25
+interface Options {
+  left?: Node<Node.Properties>
+  right?: Node<Node.Properties>
+  count?: number
+  direction?: 'left' | 'right'
+}
+export function extendTimeline(timeline: Node<Node.Properties>, options: Options) {
+  // 默认值设置
+  const count = options.count || 10
+  const direction = options.direction || 'right'
+
+  // 获取时间轴的body和bottom
   const body = timeline.getAttrs().body.d as string
-  const bottom = timeline.getAttrs().bottom.d as string
-
-  logger.info('extendTimeline:path', { body, bottom })
-
-  const firstIndexEnd = bottom.slice(1).indexOf('M') + 1
-  const first = bottom.slice(0, firstIndexEnd)
-  logger.info('extendTimeline:first', first)
-
   const bodyVector = pathVertor(body)
-  const firstBottomVector = pathVertor(first)
 
-  logger.info('extendTimeline:bodyVector', bodyVector)
-  logger.info('extendTimeline:firstBottomVector', firstBottomVector)
+  const bottom = timeline.getAttrs().bottom.d as string
+  const firstBottomVector = pathVertor(bottom, 'first')
+  const lastBottomVector = pathVertor(bottom, 'last')
 
-  const newBody = `M ${bodyVector.x1 - count * interval} ${bodyVector.y1} L ${bodyVector.x2} ${bodyVector.y2}`
+  const interval = getInterval(bottom)
+
+  let newBody = ''
   let newBottom = bottom
-  for (let i = 0; i < count; i++)
-    newBottom += `M ${firstBottomVector.x1 - i * interval} ${firstBottomVector.y1} L ${firstBottomVector.x2 - i * interval} ${firstBottomVector.y2}`
-  timeline.size(5000, 30)
+  if (direction === 'right') {
+    newBody = `M ${bodyVector.x1} ${bodyVector.y1} L ${bodyVector.x2 + count * interval} ${bodyVector.y2}`
+    for (let i = 1; i <= count; i++)
+      newBottom = `${newBottom}M ${lastBottomVector.x1 + i * interval} ${lastBottomVector.y1} L ${lastBottomVector.x2 + i * interval} ${lastBottomVector.y2}`
+  }
+  else {
+    newBody = `M ${bodyVector.x1 - count * interval} ${bodyVector.y1} L ${bodyVector.x2} ${bodyVector.y2}`
+    for (let i = 1; i <= count; i++)
+      newBottom = `M ${firstBottomVector.x1 - i * interval} ${firstBottomVector.y1} L ${firstBottomVector.x2 - i * interval} ${firstBottomVector.y2}${newBottom}`
+  }
+
   const newTimeline = timeline.setAttrs({
     body: {
       d: newBody,
@@ -85,13 +96,59 @@ export function extendTimeline(timeline: Node<Node.Properties>, left?: Node<Node
       d: newBottom,
     },
   })
-  if (left)
-    left.position(bodyVector.x1 - count * interval, 0)
-
-  logger.info('extendTimeline:newTimeline', newTimeline)
+  if (options.left && direction !== 'right')
+    options.left.position(bodyVector.x1 - count * interval, 0)
+  else if (options.right && direction === 'right')
+    options.right.position(bodyVector.x2 + count * interval, 0)
+  return newTimeline
 }
 
-export function pathVertor(path: string) {
+export function cutTimeline(timeline: Node<Node.Properties>, options: Options) {
+
+}
+
+export function getInterval(path: string) {
+  const firstVertor = pathVertor(path, 'first')
+  const secondVertor = pathVertor(path, 2)
+  return (secondVertor.x1 - firstVertor.x1) || 25
+}
+
+export function pathVertor(path: string, location: 'first' | 'last' | number = 'first') {
+  path = path.trim()
+  if (location === 'first') {
+    const firstIndexEnd = path.slice(1).indexOf('M') + 1
+    if (firstIndexEnd !== 0)
+      path = path.slice(0, firstIndexEnd)
+  }
+  else if (location === 'last') {
+    const lastIndexStart = path.lastIndexOf('M')
+    path = path.slice(lastIndexStart)
+  }
+  else if (Number.isInteger(location)) {
+    if (location >= 0) {
+      let indexStart = 0
+      let indexEnd = 0
+      for (let i = 0; i < location; i++) {
+        path = path.slice(indexEnd)
+        indexStart = path.indexOf('M')
+        indexEnd = path.slice(indexStart + 1).indexOf('M') + 1
+      }
+      indexEnd = path.slice(indexStart + 1).indexOf('M') + indexStart + 1
+      path = path.slice(indexStart, indexEnd)
+    }
+    else {
+      let indexStart = path.length
+      let indexEnd = path.length
+      for (let i = 0; i < Math.abs(location) - 1; i++) {
+        path = path.slice(0, indexStart)
+        indexStart = path.lastIndexOf('M')
+        indexEnd = path.slice(0, indexStart).lastIndexOf('M')
+      }
+      indexEnd = path.slice(0, indexStart).lastIndexOf('M')
+      path = path.slice(indexEnd, indexStart)
+    }
+  }
+
   path = path.replace('M', ' ').replace('L', ' ').replace(',', ' ')
   const vector = path.split(' ').filter(v => v !== '').map(v => Number(v))
   if (vector.length !== 4)
