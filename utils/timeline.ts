@@ -30,6 +30,10 @@ export function pruducer(graph: Graph) {
         tagName: 'path',
         selector: 'bottom',
       },
+      {
+        tagName: 'text',
+        selector: 'label',
+      },
     ],
     attrs: {
       body: {
@@ -37,12 +41,17 @@ export function pruducer(graph: Graph) {
         strokeWidth: 1,
         fill: '#000',
         d: `M 0 0 L ${(count - 1) * opt.interval} 0`,
+        text: 'body',
       },
       bottom: {
         stroke: '#000',
         strokeWidth: 1,
         fill: '#000',
         d: '',
+        text: 'bottom',
+      },
+      label: {
+        text: '123',
       },
     },
   }
@@ -75,15 +84,22 @@ export function extendTimeline(timeline: Node<Node.Properties>, options: Options
 
   let newBody = ''
   let newBottom = bottom
-  if (direction === 'right') {
-    newBody = `M ${bodyVector.x1} ${bodyVector.y1} L ${bodyVector.x2 + count * interval} ${bodyVector.y2}`
-    for (let i = 1; i <= count; i++)
-      newBottom = `${newBottom}M ${lastBottomVector.x1 + i * interval} ${lastBottomVector.y1} L ${lastBottomVector.x2 + i * interval} ${lastBottomVector.y2}`
+  if (count >= 0) {
+    if (direction === 'right') {
+      newBody = `M ${bodyVector.x1} ${bodyVector.y1} L ${bodyVector.x2 + count * interval} ${bodyVector.y2}`
+      for (let i = 1; i <= count; i++)
+        newBottom = `${newBottom}M ${lastBottomVector.x1 + i * interval} ${lastBottomVector.y1} L ${lastBottomVector.x2 + i * interval} ${lastBottomVector.y2}`
+    }
+    else {
+      newBody = `M ${bodyVector.x1 - count * interval} ${bodyVector.y1} L ${bodyVector.x2} ${bodyVector.y2}`
+      for (let i = 1; i <= count; i++)
+        newBottom = `M ${firstBottomVector.x1 - i * interval} ${firstBottomVector.y1} L ${firstBottomVector.x2 - i * interval} ${firstBottomVector.y2}${newBottom}`
+    }
   }
   else {
-    newBody = `M ${bodyVector.x1 - count * interval} ${bodyVector.y1} L ${bodyVector.x2} ${bodyVector.y2}`
-    for (let i = 1; i <= count; i++)
-      newBottom = `M ${firstBottomVector.x1 - i * interval} ${firstBottomVector.y1} L ${firstBottomVector.x2 - i * interval} ${firstBottomVector.y2}${newBottom}`
+    if (direction === 'right') {
+      const endIndex = 0
+    }
   }
 
   const newTimeline = timeline.setAttrs({
