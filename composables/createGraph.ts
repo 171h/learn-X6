@@ -1,9 +1,6 @@
 import type { Model } from '@antv/x6'
 import { Graph } from '@antv/x6'
 import { Snapline } from '@antv/x6-plugin-snapline'
-
-// import { Scroller } from '@antv/x6-plugin-scroller'
-import { Scroller } from '@antv/x6-plugin-scroller'
 import { MiniMap } from '@antv/x6-plugin-minimap'
 import { History } from '@antv/x6-plugin-history'
 import { Transform } from '@antv/x6-plugin-transform'
@@ -20,7 +17,7 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, minimap:
       color: '#F2F7FA',
     },
     grid: {
-      visible: true,
+      visible: false,
       type: 'doubleMesh',
       args: [
         {
@@ -44,12 +41,6 @@ export function useCreateGraph(graph: Graph, container: HTMLDivElement, minimap:
   graph.centerContent()
   graph.use(
     new Snapline({ enabled: true }),
-  )
-  graph.use(
-    new Scroller({
-      enabled: true,
-      pageVisible: true,
-    }),
   )
   graph.use(
     new MiniMap({
