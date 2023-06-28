@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card, Checkbox, Col, Row, Slider } from 'antd'
-import { Graph } from '@antv/x6'
+import { Dom, Graph } from '@antv/x6'
 import type { Model, Node } from '@antv/x6'
 import { Logger } from '@171h/log'
 import { Scroller } from '@antv/x6-plugin-scroller'
@@ -33,7 +33,7 @@ const data = {
     id: 'world',
     shape: 'circle',
     x: 160,
-    y: 180,
+    y: 1200,
     width: 60,
     height: 60,
     label: 'World',
@@ -84,12 +84,30 @@ onNuxtReady(() => {
       height: 200,
       pageBreak: true,
       pageVisible: true,
-      pageHeight: 400,
+      pageHeight: 20,
       pageWidth: 400,
-      minVisibleHeight: 20000,
-      minVisibleWidth: 20000,
+      padding: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
+      // minVisibleHeight: 20000,
+      // minVisibleWidth: 20000,
     }),
   )
+
+  const sc = graph.value.getPlugin('scroller') as Scroller
+  const content = sc.container.querySelector('.x6-graph-scroller-content') as HTMLDivElement
+
+  graph.value.on('resize', ({ width, height }) => {
+    Dom.css(content, {
+      width,
+      height,
+    })
+  })
+
+  // sc.container
 })
 </script>
 
