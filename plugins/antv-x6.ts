@@ -1,4 +1,5 @@
 import type { Graph } from '@antv/x6'
+import '~/assets/css/x6.css'
 
 declare global {
   interface Window {

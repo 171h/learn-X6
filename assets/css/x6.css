@@ -1,0 +1,9 @@
+/* Gantt chart 边框 */
+div.x6-graph-scroller {
+  border: 1px solid #b3b3b5;
+  overflow: auto;
+}
+
+/* 解决 graph 在 scroller 插件下的顶部空白问题 */
+
+
